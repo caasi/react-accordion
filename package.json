@@ -28,7 +28,9 @@
   "dependencies": {
     "normalize.css": "^3.0.2",
     "object-assign": "^2.0.0",
-    "react": "^0.12.1"
+    "react": "^0.12.1",
+    "react-prefixr": "0.0.3",
+    "transitionend-property": "0.0.2"
   },
   "repository": {
     "type": "git",
