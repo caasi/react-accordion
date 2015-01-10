@@ -160,6 +160,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            titleStyle  : props.titleStyle,
 	            bodyStyle   : props.bodyStyle,
 
+	            style       : assign({}, props.itemStyle, item.props.style),
+
 	            titleFactory: props.titleFactory,
 	            bodyFactory : props.bodyFactory,
 
@@ -255,8 +257,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	var transitionend = __webpack_require__(4)
 	var prefixer = __webpack_require__(5)
 
-	window.items = {}
-
 	function getExpandToolStyle(props){
 	    var style = prefixer({
 	        transition: 'all ' + props.expandToolTransitionDuration
@@ -306,8 +306,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 
 	    componentDidMount: function() {
-
-	        window.items[this.props.index] = this
 	        this.getDOMNode().addEventListener(transitionend, this.onTransitionEnd)
 	    },
 
@@ -316,19 +314,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 
 	    onTransitionEnd: function(event) {
-	        if (event.target == this.getDOMNode()){
-	            var newState = {
-	                transitioning: false
-	            }
-	            if (this.state.collapsing){
-	                newState.collapsing = false
-	            }
-	            if (this.state.expanding){
-	                newState.expanding = false
-	            }
-	            this.setState(newState)
-	            ;(this.props.onTransitionEnd || emptyFn)(event);
+	        if (this.props.transitionDuration && event.target == this.getDOMNode()){
+	            this.endTransition()
 	        }
+	    },
+
+	    endTransition: function(){
+	        if (this.props.index == 2){
+	            console.log('END')
+	        }
+	        var newState = {
+	            transitioning: false
+	        }
+	        if (this.state.collapsing){
+	            newState.collapsing = false
+	        }
+	        if (this.state.expanding){
+	            newState.expanding = false
+	        }
+
+	        this.setState(newState)
+	        ;(this.props.onTransitionEnd || emptyFn)(event);
 	    },
 
 	    getInitialState: function() {
@@ -357,6 +363,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 
 	    prepareExpandStyle: function(style, props, state){
+	        if (!props.transitionDuration){
+	            return
+	        }
+
 	        if (this.shouldPrepareExpand(props, state)){
 	            //we set the height to the current height
 	            style.height   = this.getDOMNode().offsetHeight
@@ -383,41 +393,57 @@ return /******/ (function(modules) { // webpackBootstrap
 	            style.overflow = 'hidden'
 	            this.inExpandAction = false
 	        }
-
-	        // if (state.expanding){
-	        //     style.flex = 'none'
-	        // }
 	    },
 
 	    prepareCollapseStyle: function(style, props, state){
-	        if (this.shouldPrepareCollapse(props, state)){
-	            style.height = this.getDOMNode().offsetHeight
-	            style.overflow = 'hidden'
-	            style.flex = 'none'
+	        if (props.transitionDuration){
 
-	            setTimeout(function(){
-	                if (!this.isMounted()){
-	                    return
-	                }
-	                this.inCollapseAction = true
-	                this.setState({
-	                    collapsing   : true,
-	                    expanding    : false,
-	                    transitioning: true
-	                })
-	            }.bind(this), 0)
-	        }
+	            if (this.shouldPrepareCollapse(props, state)){
+	                style.height   = this.getDOMNode().offsetHeight
+	                style.overflow = 'hidden'
+	                style.flex     = 'none'
 
-	        if (this.inCollapseAction){
-	            style.height = this.refs.title.getDOMNode().offsetHeight
-	            style.overflow = 'hidden'
-	            style.flex = 'none'
-	            this.inCollapseAction = false
+	                setTimeout(function(){
+	                    if (!this.isMounted()){
+	                        return
+	                    }
+	                    this.inCollapseAction = true
+
+	                    this.setState({
+	                        collapsing   : true,
+	                        expanding    : false,
+	                        transitioning: true
+	                    })
+	                }.bind(this), 0)
+	            } else if (this.inCollapseAction || state.collapsing){
+	                style.height          = this.refs.title.getDOMNode().offsetHeight
+	                style.overflow        = 'hidden'
+	                style.flex            = 'none'
+	                this.inCollapseAction = false
+	            }
 	        }
 
 	        if (props.collapsed || state.collapsing){
 	            style.flex = 'none'
 	        }
+	    },
+
+	    prepareBodyStyle: function(props, state) {
+	        var bodyStyle = assign({}, props.defaultBodyStyle, props.bodyStyle)
+
+	        if (props.transitionDuration && (this.shouldPrepareCollapse(props, state) || this.shouldPrepareExpand(props, state))){
+	            return bodyStyle
+	        }
+
+	        if (props.collapsed && !state.collapsing){
+	            bodyStyle.height  = 0
+	            bodyStyle.padding = 0
+	            bodyStyle.margin  = 0
+	            bodyStyle.border  = 0
+	            bodyStyle.overflow = 'hidden'
+	        }
+
+	        return bodyStyle
 	    },
 
 	    prepareStyle: function(props, state) {
@@ -441,6 +467,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var body  = this.renderBody(props, this.state)
 
 	        this.collapsed = props.collapsed
+	        this.renderWhileCollapsing = false
 
 	        return React.createElement("div", React.__spread({},  props, {title: null}), 
 	                title, 
@@ -493,24 +520,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 
 	        return tool
-	    },
-
-	    prepareBodyStyle: function(props, state) {
-	        var bodyStyle = assign({}, props.defaultBodyStyle, props.bodyStyle)
-
-	        if (this.shouldPrepareCollapse(props, state) || this.shouldPrepareExpand(props, state)){
-	            return bodyStyle
-	        }
-
-	        if (props.collapsed && !state.collapsing){
-	            bodyStyle.height  = 0
-	            bodyStyle.padding = 0
-	            bodyStyle.margin  = 0
-	            bodyStyle.border  = 0
-	            bodyStyle.overflow = 'hidden'
-	        }
-
-	        return bodyStyle
 	    },
 
 	    renderBody: function(props, state) {

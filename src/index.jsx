@@ -104,7 +104,7 @@ var Accordion = React.createClass({
             titleStyle  : props.titleStyle,
             bodyStyle   : props.bodyStyle,
 
-            style       : props.itemStyle,
+            style       : assign({}, props.itemStyle, item.props.style),
 
             titleFactory: props.titleFactory,
             bodyFactory : props.bodyFactory,

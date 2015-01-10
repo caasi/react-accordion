@@ -22,9 +22,9 @@ var App = React.createClass({
 
         return (
             <div className="App" style={{padding: 20}}>
-                <Accordion exclusive={true} transitionDuration={'550ms'} defaultActiveIndex={ACTIVE} style={{border: '1px solid gray', height: 800, display: 'flex'}}>
+                <Accordion exclusive={true} transitionDurationx={'1550ms'} defaultActiveIndex={ACTIVE} style={{border: '1px solid gray', height: 800, display: 'flex'}}>
 
-                    <div data-title="first item" style={{flex: 2}}>
+                    <div data-title="first item" style={{flex: 1}}>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam venenatis, lacus sit amet feugiat sodales, arcu ex tristique justo, vel fringilla risus turpis quis libero. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Duis lacinia finibus lorem, vitae consectetur nunc tempor et. Pellentesque elementum venenatis massa, nec vestibulum est fermentum vel. Aliquam sem nisi, iaculis quis nisi nec, consectetur euismod velit. Sed tempor faucibus tristique. Donec bibendum nunc non lacinia convallis. Nullam a neque ut tellus aliquet ullamcorper. Quisque molestie rutrum feugiat. Pellentesque id enim ut dolor aliquet fringilla. Etiam massa risus, laoreet eu tristique ac, tincidunt at urna. Curabitur consectetur porta tristique.
                         </p>
                     </div>
@@ -35,7 +35,7 @@ var App = React.createClass({
                         </p>
                     </div>
 
-                    <div style={{flex: 1}}>
+                    <div style={{flex: 1, textAlign: 'right'}}>
                         THIRD!
                         <p>Cras tristique neque sit amet eleifend consectetur. Praesent ut lobortis arcu. Quisque eget libero cursus, iaculis diam at, facilisis turpis. Fusce molestie aliquam ante nec maximus. Integer leo nibh, semper eget porta sed, cursus ac enim. Ut nec viverra neque. Suspendisse vitae ligula fringilla, pretium tortor vel, mollis mi. Maecenas nunc dolor, dignissim vel tincidunt vel, finibus at turpis. Curabitur vitae viverra nibh. Nam at vulputate enim. Integer tincidunt efficitur dolor molestie iaculis. Ut eros neque, pharetra at mattis sed, dignissim accumsan enim.</p>
                     </div>
