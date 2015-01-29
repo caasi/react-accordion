@@ -154,7 +154,15 @@ var Accordion = React.createClass({
             var newActiveIndex = index
 
             if (!this.props.exclusive){
-                newActiveIndex = assign({}, this.state.defaultActiveIndex)
+                var defaultActiveIndex = this.state.defaultActiveIndex
+                var defaultIndex       = defaultActiveIndex
+
+                if (typeof defaultIndex == 'string' || typeof defaultIndex == 'number'){
+                    defaultIndex = {}
+                    defaultIndex[defaultActiveIndex] = true
+                }
+                
+                newActiveIndex = assign({}, defaultIndex)
                 newActiveIndex[index] = !newActiveIndex[index]
             }
 
