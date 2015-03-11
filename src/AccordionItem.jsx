@@ -2,7 +2,7 @@
 
 var React  = require('react')
 var assign = require('object-assign')
-var transitionend = require('transitionend-property')
+var transitionend
 var prefixer = require('react-style-normalizer')
 
 function getExpandToolStyle(props){
@@ -55,6 +55,8 @@ module.exports = React.createClass({
     },
 
     componentDidMount: function() {
+        transitionend = transitionend || require('transitionend-property')
+
         this.getDOMNode().addEventListener(transitionend, this.onTransitionEnd)
     },
 
