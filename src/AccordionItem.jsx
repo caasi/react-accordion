@@ -47,9 +47,9 @@ module.exports = React.createClass({
                 padding: 10,
                 boxSizing: 'border-box'
             },
-            defaultStyle: prefixer({
+            defaultStyle: {
                 transform: 'translate3d(0px, 0px, 0px)'
-            }),
+            },
             transitionDuration: '0.1s'
         }
     },
