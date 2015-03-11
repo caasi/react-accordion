@@ -71,6 +71,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return {
 	            defaultActiveIndex : 0,
 	            exclusive   : false,
+
 	            defaultStyle: {
 	                position     : 'relative',
 	                flexDirection: 'column',
@@ -159,7 +160,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            children    : body,
 
 	            titleStyle  : props.titleStyle,
-	            bodyStyle   : assign({}, props.defaultBodyStyle, props.bodyStyle),
+	            bodyStyle   : assign({}, props.bodyStyle),
 
 	            style       : assign({}, props.itemStyle, item.props.style),
 
@@ -293,16 +294,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	            expandToolTransitionDuration: '0.1s',
 	            defaultTitleStyle: {
 	                padding      : 10,
-	                fontSize     : '2em',
+	                // fontSize     : '2em',
 	                fontWeight   : 'bold',
 	                display      : 'flex',
 	                flexDirection: 'row',
 	                alignItems   : 'center',
 	                cursor       : 'pointer',
-	                boxSizing    : 'border-box'
+	                boxSizing    : 'border-box',
+	                flex: 'none'
 	            },
 
 	            defaultBodyStyle: {
+	                overflow: 'auto',
 	                padding: 10,
 	                boxSizing: 'border-box'
 	            },

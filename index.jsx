@@ -20,23 +20,26 @@ var App = React.createClass({
 
     render: function() {
 
+        var titleStyle = {margin: 0}
+
         return (
             <div className="App" style={{padding: 20}}>
-                <Accordion exclusive={true} transitionDurationx={'1550ms'} defaultActiveIndex={ACTIVE} style={{border: '1px solid gray', height: 800, display: 'flex'}}>
+                <Accordion itemStyle={{display: 'flex', flexFlow: 'column'}} exclusive={true} transitionDurationx={'1550ms'} defaultActiveIndex={ACTIVE} style={{border: '1px solid gray', height: 300, display: 'flex'}}>
 
-                    <div data-title="first item" style={{flex: 1}}>
+                    <div style={{flex: 1}}>
+                        <h5 style={titleStyle}>First item</h5>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam venenatis, lacus sit amet feugiat sodales, arcu ex tristique justo, vel fringilla risus turpis quis libero. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Duis lacinia finibus lorem, vitae consectetur nunc tempor et. Pellentesque elementum venenatis massa, nec vestibulum est fermentum vel. Aliquam sem nisi, iaculis quis nisi nec, consectetur euismod velit. Sed tempor faucibus tristique. Donec bibendum nunc non lacinia convallis. Nullam a neque ut tellus aliquet ullamcorper. Quisque molestie rutrum feugiat. Pellentesque id enim ut dolor aliquet fringilla. Etiam massa risus, laoreet eu tristique ac, tincidunt at urna. Curabitur consectetur porta tristique.
                         </p>
                     </div>
 
-                    <div style={{flex: 1}}>
-                        <h2 onClick={titleClick} style={{margin: 0}}>Second item</h2>
+                    <div style={{flex: 1}} >
+                        <h5 style={titleStyle}>Second item</h5>
                         <p>Nulla ac felis eget metus vestibulum ornare. Sed elementum velit quis vulputate ultricies. Fusce et hendrerit urna, in egestas turpis. Nulla fringilla ac turpis vel faucibus. Ut varius massa eleifend, accumsan ligula et, auctor ipsum. Fusce dignissim urna vitae arcu placerat, nec sodales felis scelerisque. Maecenas suscipit facilisis orci. Sed odio neque, tincidunt non quam non, venenatis dignissim lacus. Nulla facilisi. Nullam ut sapien mauris. Aliquam auctor eu purus vel euismod. Donec varius, lacus vel egestas convallis, mi mi rhoncus turpis, sit amet tincidunt lectus leo at dolor. Mauris molestie fermentum nisl vulputate ullamcorper. Curabitur arcu libero, consequat a mauris vel, maximus pretium nibh. Morbi sed facilisis tortor, dignissim aliquam lectus. Nunc pharetra libero ornare magna elementum ultrices.
                         </p>
                     </div>
 
-                    <div style={{flex: 1, textAlign: 'right'}}>
-                        THIRD!
+                    <div style={{flex: 1, textAlign: 'right'}} title="third">
+                        <h5 style={titleStyle}>Third item</h5>
                         <p>Cras tristique neque sit amet eleifend consectetur. Praesent ut lobortis arcu. Quisque eget libero cursus, iaculis diam at, facilisis turpis. Fusce molestie aliquam ante nec maximus. Integer leo nibh, semper eget porta sed, cursus ac enim. Ut nec viverra neque. Suspendisse vitae ligula fringilla, pretium tortor vel, mollis mi. Maecenas nunc dolor, dignissim vel tincidunt vel, finibus at turpis. Curabitur vitae viverra nibh. Nam at vulputate enim. Integer tincidunt efficitur dolor molestie iaculis. Ut eros neque, pharetra at mattis sed, dignissim accumsan enim.</p>
                     </div>
 
