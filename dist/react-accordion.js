@@ -150,15 +150,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var collapsed = this.isCollapsed(index, props)
 
 	        var itemProps = assign({}, item.props, {
-	            index: index,
+	            index       : index,
 	            expandTool  : props.expandTool,
+	            expandToolStyle: props.expandToolStyle,
 	            collapsed   : collapsed,
 
 	            title       : title,
 	            children    : body,
 
 	            titleStyle  : props.titleStyle,
-	            bodyStyle   : props.bodyStyle,
+	            bodyStyle   : assign({}, props.defaultBodyStyle, props.bodyStyle),
 
 	            style       : assign({}, props.itemStyle, item.props.style),
 
@@ -210,7 +211,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var newActiveIndex = index
 
 	            if (!this.props.exclusive){
-	                newActiveIndex = assign({}, this.state.defaultActiveIndex)
+	                var defaultActiveIndex = this.state.defaultActiveIndex
+	                var defaultIndex       = defaultActiveIndex
+
+	                if (typeof defaultIndex == 'string' || typeof defaultIndex == 'number'){
+	                    defaultIndex = {}
+	                    defaultIndex[defaultActiveIndex] = true
+	                }
+
+	                newActiveIndex = assign({}, defaultIndex)
 	                newActiveIndex[index] = !newActiveIndex[index]
 	            }
 
@@ -258,15 +267,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	var prefixer = __webpack_require__(5)
 
 	function getExpandToolStyle(props){
-	    var style = prefixer({
+	    var style = {
 	        transition: 'all ' + props.expandToolTransitionDuration
-	    })
+	    }
 
 	    if (!props.collapsed){
 	        style.transform = 'rotate(-180deg)'
 	    }
 
-	    return style
+	    return prefixer(style)
 	}
 
 	function emptyFn(){}
@@ -290,8 +299,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                flexDirection: 'row',
 	                alignItems   : 'center',
 	                cursor       : 'pointer',
-	                boxSizing    : 'border-box',
-	                border : '4px solid red'
+	                boxSizing    : 'border-box'
 	            },
 
 	            defaultBodyStyle: {
@@ -320,12 +328,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 
 	    endTransition: function(){
-	        if (this.props.index == 2){
-	            console.log('END')
-	        }
 	        var newState = {
 	            transitioning: false
 	        }
+
 	        if (this.state.collapsing){
 	            newState.collapsing = false
 	        }
@@ -505,7 +511,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        if (props.expandTool){
 	            var expandToolProps = {
-	                style    : getExpandToolStyle(props),
+	                style    : assign({}, props.expandToolStyle, getExpandToolStyle(props)),
 	                collapsed: props.collapsed,
 	                children : '▾'
 	            }

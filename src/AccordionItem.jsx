@@ -250,7 +250,7 @@ module.exports = React.createClass({
 
         if (props.expandTool){
             var expandToolProps = {
-                style    : getExpandToolStyle(props),
+                style    : assign({}, props.expandToolStyle, getExpandToolStyle(props)),
                 collapsed: props.collapsed,
                 children : '▾'
             }
