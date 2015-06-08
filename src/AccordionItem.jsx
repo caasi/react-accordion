@@ -246,7 +246,7 @@ module.exports = React.createClass({
         this.collapsed = props.collapsed
         this.renderWhileCollapsing = false
 
-        return <div className="rb-accordion-item" {...props} title={null}>
+        return <div className="z-accordion-item" {...props} title={null}>
                 {title}
                 {body}
             </div>
@@ -257,7 +257,7 @@ module.exports = React.createClass({
         var title = props.title || 'Untitled'
 
         if (typeof title == 'string'){
-            title = <span className="rb-accordion-item__title" style={{}}>{title}</span>
+            title = <span className="z-accordion-item__title" style={{}}>{title}</span>
         }
 
         title.props.style = title.props.style || {}
@@ -265,7 +265,7 @@ module.exports = React.createClass({
 
         var titleProps = {
             ref       : 'title',
-            className : 'rb-accordion-item__title',
+            className : 'z-accordion-item__title',
             style     : props.titleStyle,
             children: [
                 title,
@@ -283,7 +283,7 @@ module.exports = React.createClass({
 
         if (props.expandTool){
             var expandToolProps = {
-                className: 'rb-accordion-item__tool',
+                className: 'z-accordion-item__tool',
                 style    : prefixer(assign({}, props.expandToolStyle, getExpandToolStyle(props))),
                 collapsed: props.collapsed,
                 children : '▾'
@@ -303,7 +303,7 @@ module.exports = React.createClass({
 
     renderBody: function(props, state) {
         var bodyProps = {
-            className: 'rb-accordion-item__body',
+            className: 'z-accordion-item__body',
             style    : props.bodyStyle,
             children : props.children,
             ref      : 'body'

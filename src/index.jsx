@@ -185,7 +185,7 @@ var Accordion = React.createClass({
     },
 
     prepareClassName: function(props, state) {
-        var className = 'rb-accordion ' + (props.className || '')
+        var className = 'z-accordion ' + (props.className || '')
 
         return className
     }
