@@ -5,7 +5,7 @@ var assign = require('object-assign')
 var transitionend
 var prefixer = require('react-style-normalizer')
 
-function getExpandToolStyle(props){
+var getExpandToolStyle = function(props) {
     var style = {
         transition: 'all ' + props.expandToolTransitionDuration
     }
@@ -15,9 +15,16 @@ function getExpandToolStyle(props){
     }
 
     return prefixer(style)
-}
+};
 
-function emptyFn(){}
+var emptyFn = function() {};
+
+var msFromCSSTime = function(cssTime) {
+  return /ms/.test(cssTime)
+    ? ~~parseFloat(cssTime)
+    // otherwise 's' or anything else
+    : ~~(parseFloat(cssTime) * 1000)
+};
 
 module.exports = React.createClass({
 
@@ -64,7 +71,7 @@ module.exports = React.createClass({
           domNode.addEventListener(transitionend, this.onTransitionEnd);
         } else { // IE <= 9
           //domNode.attachEvent(transitionend, this.onTransitionEnd);
-          duration = ~~(parseFloat(this.props.transitionDuration) * 1000);
+          duration = msFromCSSTime(this.props.transitionDuration);
           setTimeout(this.endTransition, duration);
         }
     },
@@ -80,7 +87,7 @@ module.exports = React.createClass({
           domNode.removeEventListener(transitionend, this.onTransitionEnd);
         } else { // IE <= 9
           //domNode.detachEvent(transitionend, this.onTransitionEnd);
-          duration = ~~(parseFloat(this.props.transitionDuration) * 1000);
+          duration = msFromCSSTime(this.props.transitionDuration);
           setTimeout(this.endTransition, duration);
         }
     },
